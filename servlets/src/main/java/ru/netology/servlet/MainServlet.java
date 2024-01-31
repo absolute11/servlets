@@ -1,9 +1,17 @@
 package ru.netology.servlet;
 
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+import ru.netology.config.Appconfig;
 import ru.netology.controller.PostController;
 import ru.netology.repository.PostRepository;
 import ru.netology.service.PostService;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,11 +26,11 @@ public class MainServlet extends HttpServlet {
   private static final String POST_METHOD = "POST";
 
   private final PostController controller;
-
   public MainServlet() {
-    final var repository = new PostRepository(new ConcurrentHashMap<>());
-    final var service = new PostService(repository);
-    controller = new PostController(service);
+    // Создаем контекст Spring с помощью конфигурационного класса AppConfig
+    AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Appconfig.class);
+    // Получаем экземпляр PostController из контекста Spring
+    controller = context.getBean(PostController.class);
   }
 
   @Override
