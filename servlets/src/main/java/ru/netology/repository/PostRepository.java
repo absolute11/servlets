@@ -2,11 +2,16 @@ package ru.netology.repository;
 
 import ru.netology.model.Post;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class PostRepository {
+  public List<Post> all() {
+    return Collections.emptyList();
+  }
   private final Map<Long, Post> posts;
 
   public PostRepository() {
